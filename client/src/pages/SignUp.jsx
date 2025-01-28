@@ -32,7 +32,7 @@ function SignUp() {
                 setError(true)
                 return
             }
-        
+        navigate('/sign-in')
         }catch(error){
             setLoading(false);
             setError(true);
