@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
 import authRoutes from './routes/authRoutes.js'
 import morgan from 'morgan'
+import cookieParser from 'cookie-parser';
 dotenv.config();
 
 mongoose.connect(process.env.MONGODB_URI).then(() => {
@@ -15,8 +16,11 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 
 const app = express();
 
-app.use(express.json())
-app.use(morgan('dev'))
+app.use(express.json());
+
+app.use(cookieParser());
+
+app.use(morgan('dev'));
 app.listen(3000, ()=> {
     console.log("server listening on port 3000")
 });
