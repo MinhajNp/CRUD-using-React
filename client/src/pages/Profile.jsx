@@ -51,6 +51,7 @@ function Profile() {
                 if (profileUrl) {
                     updatedFormData.profilePicture = profileUrl; // Directly update the formData copy
                     setImage(null)
+                   
                 }
             }
             console.log(updatedFormData)
@@ -63,11 +64,15 @@ function Profile() {
                 body: JSON.stringify(updatedFormData)
             });
             const data = await res.json();
-            if(data.success){
+            if(data.success){            //there is no success feild if the data successfully updated, there is if it fails
+                console.log(data)
+                console.log("updated")
                 dispatch(updateUserFailure(data.error));
                 return
             }
+            console.log(data)
             dispatch(updateUserSuccess(data))
+            console.log("updated")
             setUpdateSuccess(true);
         }catch(error){
             console.log(error)
@@ -82,15 +87,17 @@ function Profile() {
             });
             const data = await res.json();
             if(!data.success) {
-                dispatch(deleteUserFailure(data.message))
+                dispatch(deleteUserFailure(data.error))
                 return;
             }
             dispatch(deleteUserSuccess())
         }catch(error){
             console.log(error)
-            dispatch(deleteUserFailure(error.message || "Something went wrong"));
+            dispatch(deleteUserFailure(error || "Something went wrong"));
         }
     }
+
+    
   return (
     <>
     <Header/>
@@ -100,6 +107,7 @@ function Profile() {
         <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
             <input type="file" ref={fileRef} hidden accept='image/*' 
             onChange={(e)=> setImage(e.target.files[0])}/>
+             
             <img src={image ? URL.createObjectURL(image) : currentUser.profilePicture || 'https://t4.ftcdn.net/jpg/05/69/90/73/360_F_569907313_fl7W3gX7YIVw2r05B4Ij1c21ix4xRUqD.jpg' } alt="profile"
              className='h-34 w-34 self-center cursor-pointer rounded-full object-cover mt-2'
              onClick={()=> fileRef.current.click()}/>
@@ -117,7 +125,7 @@ function Profile() {
             <span onClick={handleDeleteAccount} className='text-red-700 cursor-pointer'>Delete Account</span>
         </div>
         <p className='text-red-700 mt-5'> {error && 'Something went wrong!'}</p>
-        <p className='text-green-700 mt-5 flex text-center'> {updateSuccess && 'Profile updated Successfully'}</p>
+        <p className='text-green-700 mt-5 '> {updateSuccess && 'Profile updated Successfully'}</p>
     </div>
     </>
     

@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 
 export const signup = async(req, res, next)=>{
     const {username, email, password} = req.body;
-    const hashedPassword = bcryptjs.hashSync(password, 10);
+    const hashedPassword = await bcryptjs.hash(password, 10);
     const newUser = new User({username, email, password: hashedPassword});
     console.log(newUser)
     try{
@@ -39,3 +39,13 @@ export const signin = async(req,res,next) => {
         next(error)
     }
 }
+
+export const signout = (req, res) => {
+    res.clearCookie("access_token", {
+        httpOnly: true,
+        secure: true, // Use only with HTTPS
+        sameSite: "None", // Allow cross-site cookies
+    })
+    .status(200)
+    .json({ success: true, message: "Signout success!" }); // 🔹 Send JSON response
+};
