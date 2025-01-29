@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react'
 import Header from '../components/Header'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { updateUserStart, updateUserSuccess, updateUserFailure } from '../redux/user/userSlice'
+import { updateUserStart, updateUserSuccess, updateUserFailure,
+         deleteUserStart, deleteUserSuccess, deleteUserFailure } from '../redux/user/userSlice'
 
 
 function Profile() {
@@ -72,6 +73,24 @@ function Profile() {
             console.log(error)
         }
     }
+
+    const handleDeleteAccount= async()=>{
+        try{
+            dispatch(deleteUserStart())
+            const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+                method: 'DELETE',
+            });
+            const data = await res.json();
+            if(!data.success) {
+                dispatch(deleteUserFailure(data.message))
+                return;
+            }
+            dispatch(deleteUserSuccess())
+        }catch(error){
+            console.log(error)
+            dispatch(deleteUserFailure(error.message || "Something went wrong"));
+        }
+    }
   return (
     <>
     <Header/>
@@ -95,7 +114,7 @@ function Profile() {
                 {loading? 'Loading....':'Update'}</button>
         </form>
         <div className='flex justify-cente mt-5'>
-            <span className='text-red-700 cursor-pointer'>Delete Account</span>
+            <span onClick={handleDeleteAccount} className='text-red-700 cursor-pointer'>Delete Account</span>
         </div>
         <p className='text-red-700 mt-5'> {error && 'Something went wrong!'}</p>
         <p className='text-green-700 mt-5 flex text-center'> {updateSuccess && 'Profile updated Successfully'}</p>

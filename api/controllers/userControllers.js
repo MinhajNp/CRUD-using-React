@@ -36,3 +36,16 @@ export const updateUser = async (req, res, next) =>{
         next(error)
     }
 }
+
+// delete User
+export const deleteUser = async(req, res, next)=>{
+    if(req.user.id !== req.params.id){
+        return next(errorHandler(401, 'User id not match!'));
+    }
+    try{
+        await User.findByIdAndDelete(req.params.id)
+        return res.status(200).json({ success: true, message: "User has been deleted." }); // Return JSON object
+    }catch(error){
+        next(error)
+    }
+}
