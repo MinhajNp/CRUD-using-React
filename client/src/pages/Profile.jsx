@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import Header from '../components/Header'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify';
 import {
     updateUserStart, updateUserSuccess, updateUserFailure,
     deleteUserStart, deleteUserSuccess, deleteUserFailure
@@ -96,6 +97,7 @@ function Profile() {
                 dispatch(deleteUserFailure(data.error))
                 return;
             }
+            toast.success("Deleted Successfully!")
             dispatch(deleteUserSuccess())
         } catch (error) {
             console.log(error)
