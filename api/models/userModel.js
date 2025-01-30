@@ -7,10 +7,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    email:{
+    email: {
         type: String,
         required: true,
-        unique:true,
+        unique: true,
     },
     password: {
         type: String,
@@ -20,11 +20,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "https://t4.ftcdn.net/jpg/05/69/90/73/360_F_569907313_fl7W3gX7YIVw2r05B4Ij1c21ix4xRUqD.jpg",
     },
-    isAdmin:{
-        type:Boolean,
-        default:false,
+    isAdmin: {
+        type: Boolean,
+        default: false,
     },
-}, {timestamps: true});
+}, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 export default User;
