@@ -6,6 +6,7 @@ import adminRoutes from './routes/adminRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import morgan from 'morgan'
 import cookieParser from 'cookie-parser';
+import path from 'path';
 dotenv.config();
 
 mongoose.connect(process.env.MONGODB_URI).then(() => {
@@ -14,8 +15,15 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
     console.log(err);
 })
 
+const __dirname = path.resolve();
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, '/client/dist')))
+
+app.get('*', (req, res) =>{
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
+});
 
 app.use(express.json());
 
