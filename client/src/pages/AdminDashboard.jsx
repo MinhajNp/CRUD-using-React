@@ -21,14 +21,15 @@ function AdminDashboard() {
 
     const fetchUsers = async () => {
         try {
-            const res = await fetch(`/api/admin/users?search=${search}`, {
+            const res = await fetch(`/api/admin/users?search=${search}`,{
                 method: 'GET',
             });
             const data = await res.json();
             setUsers(data);
         } catch (error) {
+          console.log("error here")
             console.log(error);
-            toast.error(error.code.split('/')[1].split('-').join(" "));
+            toast.error(error);
         }
         finally {
             setLoading(false); // stop loading after fetching
@@ -47,7 +48,7 @@ function AdminDashboard() {
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.code.split('/')[1].split('-').join(" "));
+            toast.error(error);
         }
     };
 
@@ -91,7 +92,7 @@ function AdminDashboard() {
             if (data.message != 'User with this email already exists!') {
                 setShowModal(false);
                 toast.success("User Added Successfully!");
-                setNewUser({})
+                
                 fetchUsers();
             }
             console.log(data)
