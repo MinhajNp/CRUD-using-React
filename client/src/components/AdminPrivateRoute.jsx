@@ -7,10 +7,10 @@ export function AdminPrivateRoute() {
 
     // Check if currentUser is available and if they are an admin
     if (!currentUser) {
-        return <Navigate to='/adminSignIn' />;
+        return <Navigate to='/admin/sign-in' />;
     }
 
-    return currentUser.isAdmin ? <Outlet /> : <Navigate to='/adminSignIn' />;
+    return currentUser.isAdmin ? <Outlet /> : <Navigate to='/admin/sign-in' />;
 }
 
 export function IsAdminLogout() {
@@ -21,5 +21,5 @@ export function IsAdminLogout() {
         return <Outlet />;
     }
 
-    return !currentUser.isAdmin ? <Outlet /> : <Navigate to='/dashboard' />;
+    return !currentUser.isAdmin ? <Outlet /> : <Navigate to='/admin/dashboard' />;
 }

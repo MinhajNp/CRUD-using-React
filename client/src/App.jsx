@@ -32,10 +32,10 @@ function App() {
         </Route>
 
         <Route element={<IsAdminLogout />}>
-          <Route path="/adminSignIn" element={<AdminSignIn />} />
+          <Route path="/admin/sign-in" element={<AdminSignIn />} />
         </Route>
         <Route element={<AdminPrivateRoute />}>
-          <Route path="/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Route>
         <Route path='*' element={<PageNotFound />} />
       </Routes>

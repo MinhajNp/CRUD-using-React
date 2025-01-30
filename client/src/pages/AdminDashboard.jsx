@@ -91,7 +91,7 @@ function AdminDashboard() {
             if (data.message != 'User with this email already exists!') {
                 setShowModal(false);
                 toast.success("User Added Successfully!");
-                setNewUser(null)
+                setNewUser({})
                 fetchUsers();
             }
             console.log(data)
@@ -204,21 +204,21 @@ function AdminDashboard() {
               <input
                 type="text"
                 placeholder="Username"
-                value={newUser.username}
+                value={newUser?.username}
                 onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
                 className="w-full p-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
               <input
                 type="email"
                 placeholder="Email"
-                value={newUser.email}
+                value={newUser?.email}
                 onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
                 className="w-full p-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
               <input
                 type="password"
                 placeholder="Password"
-                value={newUser.password}
+                value={newUser?.password}
                 onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
                 className="w-full p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
