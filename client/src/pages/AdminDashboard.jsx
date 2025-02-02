@@ -27,7 +27,6 @@ function AdminDashboard() {
             const data = await res.json();
             setUsers(data);
         } catch (error) {
-          console.log("error here")
             console.log(error);
             toast.error(error);
         }

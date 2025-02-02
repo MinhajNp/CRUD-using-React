@@ -19,24 +19,17 @@ mongoose.connect(process.env.MONGODB_URI)
     });
 
 const app = express();
-const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('dev'));
 
-// **Register API routes before serving static files**
+
 app.use('/api/admin', adminRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 
-// **Serve static files**
-app.use(express.static(path.join(__dirname, '/client/dist')));
 
-// **Wildcard route (after API routes) for frontend routing**
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-});
 
 // **Error handling middleware**
 app.use((err, req, res, next) => {

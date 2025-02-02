@@ -5,12 +5,15 @@ import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
 import { PrivateRoute, IsLogout } from "./components/PrivateRoute";
 import PageNotFound from './pages/PageNotFound'
+import React from "react"
+const pageNotFound = React.lazy(()=> import('./pages/PageNotFound')) //importing using react.lazy just implementing fro learning
 
 import AdminSignIn from "./pages/AdminSignIn"
 import AdminDashboard from "./pages/AdminDashboard"
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { AdminPrivateRoute, IsAdminLogout } from './components/AdminPrivateRoute'
+import { Suspense } from "react"
 
 
 function App() {
@@ -37,7 +40,11 @@ function App() {
         <Route element={<AdminPrivateRoute />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Route>
-        <Route path='*' element={<PageNotFound />} />
+        <Route path='*' element={
+          <Suspense fallback={<h2>Loading...</h2>}>
+            <PageNotFound />
+          </Suspense>
+          } />
       </Routes>
 
     </BrowserRouter>
